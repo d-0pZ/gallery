@@ -1,6 +1,6 @@
 var config = {}
 
-// Update to have your correct username and password
+//MongoDB Atlas connection strings
 config.mongoURI = {
     production: 'mongodb+srv://iqraali3:lpSksCDnhMA2cqA0@cluster0.6hsfv26.mongodb.net/darkroom?retryWrites=true&w=majority',
     development: 'mongodb+srv://iqraali3:lpSksCDnhMA2cqA0@cluster0.6hsfv26.mongodb.net/darkroom-dev?retryWrites=true&w=majority',
@@ -8,3 +8,4 @@ config.mongoURI = {
 }
 
 module.exports = config;
+
