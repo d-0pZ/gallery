@@ -15,6 +15,20 @@ pipeline {
                 sh 'npm install'
             }
         }
+        stage('Run Tests') {
+            steps {
+                sh 'npm test'
+            }
+            post {
+                failure {
+                    emailext (
+                        subject: "Test Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                        body: "Tests failed in build ${env.BUILD_NUMBER}. Check console at ${env.BUILD_URL}",
+                        to: "iqra.ali3@student.moringaschool.com"
+                    )
+                }
+            }
+        }
         stage('Deploy to Render') {
             steps {
                 echo 'Deployment triggered automatically via GitHub push to Render'
