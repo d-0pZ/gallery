@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/d-0pZ/gallery.git'
+                git branch: 'master', url: 'https://github.com/d-0pZ/gallery.git'
             }
         }
         stage('Initial Dependencies') {
