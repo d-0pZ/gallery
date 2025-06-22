@@ -42,7 +42,9 @@ pipeline {
                         message: "Deployment Successful! Build #${env.BUILD_NUMBER} deployed to Render: https://gallery-pxfl.onrender.com",
                         teamDomain: 'DevOps-prjz',
                         tokenCredentialId: 'slack-token',
-                        botUser: true
+                        botUser: true,
+                        iconEmoji: ':rocket:',
+                        username: 'd-0pZ'
                     )
                 }
             }
