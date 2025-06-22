@@ -34,6 +34,15 @@ pipeline {
                 echo 'Deployment triggered automatically via GitHub push to Render'
                 echo 'App URL: https://gallery-pxfl.onrender.com'
             }
+            post {
+                success {
+                    slackSend(
+                        channel: '#iqra_ip1',
+                        color: 'good',
+                        message: "Deployment Successful! Build #${env.BUILD_NUMBER} deployed to Render: https://gallery-pxfl.onrender.com"
+                    )
+                }
+            }
         }
     }
     post {
