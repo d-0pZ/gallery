@@ -4,17 +4,31 @@ pipeline {
     tools {
         nodejs 'NodeJS-24'
     }
+    
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 20, unit: 'MINUTES')
+    }
+    
     stages {
         stage('Clone Repository') {
             steps {
                 git branch: 'master', url: 'https://github.com/d-0pZ/gallery.git'
             }
         }
-        stage('Initial Dependencies') {
+        
+        stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh 'npm ci --cache ~/.npm-cache'
             }
         }
+        
+        stage('Security Audit') {
+            steps {
+                sh 'npm audit --audit-level moderate || true'
+            }
+        }
+        
         stage('Run Tests') {
             steps {
                 sh 'npm test'
@@ -29,6 +43,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Deploy to Render') {
             steps {
                 echo 'Deployment triggered automatically via GitHub push to Render'
@@ -39,7 +54,7 @@ pipeline {
                     slackSend(
                         channel: '#iqra_ip1',
                         color: 'good',
-                        message: "🚀Deployment Successful! Build #${env.BUILD_NUMBER} deployed to Render: https://gallery-pxfl.onrender.com",
+                        message: "🚀 Deployment Successful! Build #${env.BUILD_NUMBER} deployed to https://gallery-pxfl.onrender.com",
                         teamDomain: 'DevOps-prjz',
                         tokenCredentialId: 'slack-token',
                         botUser: true
@@ -48,6 +63,7 @@ pipeline {
             }
         }
     }
+    
     post {
         success {
             echo 'Pipeline completed successfully!'
