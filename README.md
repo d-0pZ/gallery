@@ -752,8 +752,8 @@ docker restart jenkins-server
 
 **Built with ❤️ by Iqra Ali**
 
-[![Follow on GitHub](https://img.shields.io/github/followers/your-username?style=social)](https://github.com/your-username)
-[![Star this repo](https://img.shields.io/github/stars/your-username/gallery?style=social)](https://github.com/your-username/gallery)
+[![Follow on GitHub](https://img.shields.io/github/followers/your-username?style=social)](https://github.com/d-0pZ)
+[![Star this repo](https://img.shields.io/github/stars/your-username/gallery?style=social)](https://github.com/d-0pZ/gallery)
 
 </div>
 
