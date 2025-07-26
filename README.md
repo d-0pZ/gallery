@@ -23,7 +23,7 @@
 
 ## 🎯 Project Overview
 
-This project demonstrates the implementation of a CI/CD pipeline using Jenkins for a Node.js web application with MongoDB integration. The solution addresses critical DevOps challenges including automated testing, secure credential management, multi-environment deployments, and comprehensive monitoring through Slack integration.
+This project demonstrates the implementation of a CI/CD pipeline using Jenkins for a Node.js web application with MongoDB  Database integration. The solution addresses critical DevOps challenges including automated testing, secure credential management, multi-environment deployments, and comprehensive monitoring through Slack integration.
 
 ### ✨ Key Features
 
