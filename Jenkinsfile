@@ -44,7 +44,7 @@ pipeline {
                     emailext (
                         subject: "Test Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                         body: "Tests failed in build ${env.BUILD_NUMBER}. Check console at ${env.BUILD_URL}",
-                        to: "iqra2.ali@proton.me"
+                        to: "iqra.ali3@student.moringaschool.com"
                     )
                 }
             }
@@ -79,7 +79,7 @@ pipeline {
             emailext (
                 subject: "Pipeline Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Pipeline failed in build ${env.BUILD_NUMBER}. Check console at ${env.BUILD_URL}",
-                to: "iqra2.ali@proton.me"
+                to: "iqra.ali3@student.moringaschool.com"
             )
         }
     }
