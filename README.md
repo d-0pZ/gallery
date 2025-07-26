@@ -424,18 +424,6 @@ Default Recipients: [Team email addresses]
 <summary>Click to expand complete Jenkinsfile</summary>
 
 ```groovy
-/**
- * Jenkins Pipeline Configuration for Gallery Application
- * 
- * This declarative pipeline automates the CI/CD process for a Node.js gallery application
- * deployed on Render platform. The pipeline includes dependency management, security auditing,
- * testing, deployment verification, and comprehensive notification system.
- * 
- * @author DevOps Team
- * @version 1.0
- * @since 2025
- */
-
 pipeline {
     // Use any available Jenkins agent for pipeline execution
     agent any
@@ -606,8 +594,8 @@ pipeline {
                 success {
                     // Send success notification to Slack channel
                     slackSend(
-                        channel: '#yourname_ip1',           // Target Slack channel
-                        color: 'good',                      // Green color indicator
+                        channel: '#your-channel',           // Target Slack channel
+                        color: 'good',
                         message: "🚀 Deployment Successful! Build #${env.BUILD_NUMBER} deployed to ${env.RENDER_APP_URL}",
                         teamDomain: 'YourWorkspace',        // Slack workspace domain
                         tokenCredentialId: 'slack-token',   // Jenkins credential for Slack token
@@ -617,8 +605,8 @@ pipeline {
                 failure {
                     // Send failure notification to Slack channel
                     slackSend(
-                        channel: '#yourname_ip1',
-                        color: 'danger',                    // Red color indicator
+                        channel: '#your-channel',
+                        color: 'danger',
                         message: "❌ Deployment Failed! Build #${env.BUILD_NUMBER} - Check logs at ${env.BUILD_URL}",
                         teamDomain: 'YourWorkspace',
                         tokenCredentialId: 'slack-token',
@@ -733,7 +721,7 @@ pipeline {
 [✓] npm ci --cache ~/.npm-cache --silent
 [✓] mongodb://***:***@***/darkroom?authSource=admin... (credentials masked)
 [✓] Connected to Database: test environment (darkroom)
-[✓] ✅ Deployment verified successfully!
+[✓] Deployment verified successfully!
 ```
 
 **Render Build Logs Monitoring**:
