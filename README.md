@@ -648,7 +648,7 @@ pipeline {
 
 #### Credential Protection
 - 🔒 Environment variables for sensitive data
-- 🔑 Jenkins credential store integration
+- 🔑 Jenkins credential store integrations
 - 🛡️ Console output sanitization
 - ⚠️ Deprecation warning masking
 - 🧹 Error message sanitization
