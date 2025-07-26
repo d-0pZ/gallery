@@ -752,8 +752,8 @@ docker restart jenkins-server
 
 **Built with ❤️ by Iqra Ali**
 
-[![Follow on GitHub](https://img.shields.io/github/followers/your-username?style=social)](https://github.com/d-0pZ)
-[![Star this repo](https://img.shields.io/github/stars/your-username/gallery?style=social)](https://github.com/d-0pZ/gallery)
+[![Follow on GitHub](https://img.shields.io/github/followers/d-0pZ?style=social)](https://github.com/d-0pZ)
+[![Star this repo](https://img.shields.io/github/stars/d-0pZ/gallery?style=social)](https://github.com/d-0pZ/gallery)
 
 </div>
 
@@ -762,12 +762,6 @@ docker restart jenkins-server
 ## ⭐ Show Your Support
 
 If this project helped you or your team implement a successful CI/CD pipeline, please consider giving it a star! ⭐
-
-**Why star this repository?**
-- 🚀 It helps others discover this implementation
-- 📈 Shows the impact of this DevOps solution
-- 💪 Motivates continued development and documentation
-- 🌟 Takes only 2 seconds but means the world to me!
 
 <div align="center">
 
