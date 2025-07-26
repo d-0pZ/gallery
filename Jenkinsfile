@@ -15,8 +15,6 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
         timeout(time: 20, unit: 'MINUTES')
-        // Masking passwords in console output
-        maskPasswords()
     }
     
     stages {
