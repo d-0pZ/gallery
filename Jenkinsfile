@@ -5,6 +5,12 @@ pipeline {
         nodejs 'NodeJS-24'
     }
     
+    environment {
+        MONGODB_URI_PRODUCTION = credentials('mongodb-uri-production')
+        MONGODB_URI_DEVELOPMENT = credentials('mongodb-uri-development')
+        MONGODB_URI_TEST = credentials('mongodb-uri-test')
+    }
+    
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
         timeout(time: 20, unit: 'MINUTES')
@@ -38,7 +44,7 @@ pipeline {
                     emailext (
                         subject: "Test Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                         body: "Tests failed in build ${env.BUILD_NUMBER}. Check console at ${env.BUILD_URL}",
-                        to: "iqra.ali3@student.moringaschool.com"
+                        to: "iqra2.ali@proton.me"
                     )
                 }
             }
@@ -55,7 +61,7 @@ pipeline {
                         channel: '#iqra_ip1',
                         color: 'good',
                         message: "🚀 Deployment Successful! Build #${env.BUILD_NUMBER} deployed to https://gallery-pxfl.onrender.com",
-                        teamDomain: 'DevOps-prjz',
+                        teamDomain: 'Ammar',
                         tokenCredentialId: 'slack-token',
                         botUser: true
                     )
@@ -70,6 +76,11 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed!'
+            emailext (
+                subject: "Pipeline Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                body: "Pipeline failed in build ${env.BUILD_NUMBER}. Check console at ${env.BUILD_URL}",
+                to: "iqra2.ali@proton.me"
+            )
         }
     }
 }
