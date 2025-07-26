@@ -16,7 +16,7 @@ function getSecureLogMessage(uri) {
     if (!uri) return 'Database URI not found';
     
     // Extract just the database name for logging
-    const dbMatch = uri.match(/\/([^?]+)/);
+    const dbMatch = uri.match(/\/([^/?]+)(?:\?|$)/);
     const dbName = dbMatch ? dbMatch[1] : 'unknown';
     const env = process.env.NODE_ENV || 'development';
     
