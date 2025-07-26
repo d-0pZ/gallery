@@ -15,6 +15,8 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
         timeout(time: 20, unit: 'MINUTES')
+        // Masking passwords in console output
+        maskPasswords()
     }
     
     stages {
@@ -26,7 +28,7 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                sh 'npm ci --cache ~/.npm-cache'
+                sh 'npm ci --cache ~/.npm-cache --silent'
             }
         }
         
@@ -38,7 +40,10 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                sh 'npm test'
+                // Filter MongoDB URIs from output
+                sh '''
+                    npm test 2>&1 | sed 's/mongodb:\\/\\/[^:]*:[^@]*@[^/]*/mongodb:\\/\\/***:***@***/g'
+                '''
             }
             post {
                 failure {
@@ -57,10 +62,10 @@ pipeline {
                 echo "App URL: ${env.RENDER_APP_URL}"
                 echo 'Waiting for deployment to complete...'
                 
-                // Wait a bit for deployment to process
+                // Wait for deployment to process
                 sleep time: 30, unit: 'SECONDS'
                 
-                // Check if deployment is successful by testing the URL
+                // Checking if deployment is successful by testing the URL
                 script {
                     def maxRetries = 10
                     def retryCount = 0

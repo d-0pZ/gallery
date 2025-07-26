@@ -11,6 +11,49 @@ let image = require('./routes/image');
 // Initializing the app
 const app = express();
 
+// Masking sensitive data in error messages
+function sanitizeError(error) {
+    if (typeof error === 'string') {
+        // Replace any MongoDB URI patterns with masked version
+        return error.replace(
+            /mongodb(+srv)?:\/\/[^:]+:[^@]+@[^/]+/g,
+            'mongodb://***:***@***'
+        );
+    }
+    return error;
+}
+
+// Sanitizing deprecation warnings to prevent credentials exposure
+const originalEmitWarning = process.emitWarning;
+process.emitWarning = function(warning, type, code, ctor) {
+    // Sanitizing MongoDB URL deprecation warnings that expose credentials
+    if (code === 'DEP0170' && warning.includes('mongodb://')) {
+        const sanitizedWarning = sanitizeError(warning);
+        return originalEmitWarning.call(process, sanitizedWarning, type, code, ctor);
+    }
+    return originalEmitWarning.call(process, warning, type, code, ctor);
+};
+
+// Override console methods to sanitize MongoDB URIs
+const originalConsoleError = console.error;
+const originalConsoleLog = console.log;
+const originalConsoleWarm = console.warm;
+
+console.error = function(...args) {
+    const sanitizedArgs = args.map(arg => sanitizeError(arg));
+    originalConsoleError.apply(console, sanitizedArgs);
+};
+
+console.log = function(...args) {
+    const sanitizedArgs = args.map(arg => sanitizeError(arg));
+    originalConsoleLog.apply(console, sanitizedArgs);
+};
+
+console.warn = function(...args) {
+    const sanitizedArgs = args.map(arg => sanitizeError(arg));
+    originalConsoleWarn.apply(console, sanitizedArgs);
+};
+
 // Helper function to safely log database connection
 function getSecureLogMessage(uri) {
     if (!uri) return 'Database URI not found';
@@ -25,9 +68,13 @@ function getSecureLogMessage(uri) {
 
 // connecting the database
 const MONGODB_URI = process.env.MONGODB_URI || config.mongoURI[app.settings.env]
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true  },(err)=>{
+mongoose.connect(MONGODB_URI, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true  
+},(err)=>{
     if (err) {
-        console.log(err)
+        // Enhanced error handling
+        console.log(sanitizeError.message || err)
     }else{
         console.log(getSecureLogMessage(MONGODB_URI))
     }
