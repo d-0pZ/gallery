@@ -11,14 +11,25 @@ let image = require('./routes/image');
 // Initializing the app
 const app = express();
 
-// connecting the database
+// Helper function to safely log database connection
+function getSecureLogMessage(uri) {
+    if (!uri) return 'Database URI not found';
+    
+    // Extract just the database name for logging
+    const dbMatch = uri.match(/\/([^?]+)/);
+    const dbName = dbMatch ? dbMatch[1] : 'unknown';
+    const env = process.env.NODE_ENV || 'development';
+    
+    return `Connected to Database: ${env} environment (${dbName})`;
+}
 
+// connecting the database
 const MONGODB_URI = process.env.MONGODB_URI || config.mongoURI[app.settings.env]
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true  },(err)=>{
     if (err) {
         console.log(err)
     }else{
-        console.log(`Connected to Database: ${MONGODB_URI}`)
+        console.log(getSecureLogMessage(MONGODB_URI))
     }
 });
 
