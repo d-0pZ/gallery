@@ -4,7 +4,6 @@
 [![Jenkins](https://img.shields.io/badge/Jenkins-2.4+-blue.svg)](https://jenkins.io/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green.svg)](https://www.mongodb.com/cloud/atlas)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
 > 🚀 A CI/CD pipeline implementation using Jenkins for Node.js applications with MongoDB integration, featuring automated testing, secure credential management, and comprehensive monitoring.
 
