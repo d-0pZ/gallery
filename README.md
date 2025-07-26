@@ -769,4 +769,4 @@ If this project helped you or your team implement a successful CI/CD pipeline, p
 
 ### 🏷️ Tags
 
-`jenkins` `ci-cd` `devops` `nodejs` `mongodb` `docker` `automation` `pipeline` `webhook` `slack` `render` `enterprise` `security` `monitoring`
+`jenkins` `ci-cd` `devops` `nodejs` `mongodb` `docker` `automation` `pipeline` `webhook` `slack` `render` `security` `monitoring`
