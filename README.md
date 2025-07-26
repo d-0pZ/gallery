@@ -746,6 +746,8 @@ docker restart jenkins-server
 
 ---
 
+---
+
 <div align="center">
 
 **Built with ❤️ by Iqra Ali**
@@ -754,6 +756,277 @@ docker restart jenkins-server
 [![Star this repo](https://img.shields.io/github/stars/your-username/gallery?style=social)](https://github.com/your-username/gallery)
 
 </div>
+
+---
+
+## ⭐ Show Your Support
+
+If this project helped you or your team implement a successful CI/CD pipeline, please consider giving it a star! ⭐
+
+**Why star this repository?**
+- 🚀 It helps others discover this implementation
+- 📈 Shows the impact of this DevOps solution
+- 💪 Motivates continued development and documentation
+- 🌟 Takes only 2 seconds but means the world to me!
+
+<div align="center">
+
+### 🌟 **[Click here to Star this Repository](https://github.com/your-username/gallery)** 🌟
+
+*Your star helps other developers find this CI/CD implementation and validates the work put into this project.*
+
+</div>
+
+---
+
+## ☕ Please Buy Me Coffee
+
+Found this CI/CD pipeline implementation valuable? Consider supporting my work with a cup of coffee! 
+
+<div align="center">
+
+*Click above to support this project with any amount you wish. Every contribution is deeply appreciated!*
+
+</div>
+
+### 💝 Why Your Support Matters
+
+- 🛠️ **Maintain & Improve**: Keep this documentation updated with latest practices
+- 📚 **Create More Guides**: Develop additional DevOps implementation tutorials  
+- 🔄 **Add New Features**: Implement advanced CI/CD patterns and examples
+- 🌍 **Help the Community**: Make DevOps knowledge accessible to everyone
+
+> **Note**: Your contribution is completely voluntary. Whether you contribute or not, this project remains free and open-source forever!
+
+<div align="center">
+
+*Thank you for being part of the DevOps community! 🙏*
+
+</div>
+
+<!-- PayPal Integration Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Find the PayPal button and add click handler
+    const paypalButton = document.querySelector('a[href="javascript:void(0)"]');
+    if (paypalButton) {
+        paypalButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            openPayPalDonation();
+        });
+    }
+});
+
+function openPayPalDonation() {
+    // Create PayPal donation popup
+    const popup = window.open('', 'PayPalDonation', 'width=500,height=600,scrollbars=yes,resizable=yes');
+    
+    // PayPal donation form HTML
+    const paypalHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Buy Me a Mongolian Coffee ☕</title>
+            <style>
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    margin: 0;
+                    padding: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                }
+                .container {
+                    background: white;
+                    padding: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                    text-align: center;
+                    max-width: 400px;
+                    width: 100%;
+                }
+                .coffee-icon {
+                    font-size: 4em;
+                    margin-bottom: 20px;
+                }
+                h2 {
+                    color: #333;
+                    margin-bottom: 10px;
+                }
+                .subtitle {
+                    color: #666;
+                    margin-bottom: 25px;
+                    font-size: 14px;
+                }
+                .amount-buttons {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 10px;
+                    margin: 20px 0;
+                }
+                .amount-btn {
+                    padding: 12px;
+                    border: 2px solid #4CAF50;
+                    background: white;
+                    color: #4CAF50;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    transition: all 0.3s;
+                }
+                .amount-btn:hover, .amount-btn.selected {
+                    background: #4CAF50;
+                    color: white;
+                    transform: translateY(-2px);
+                }
+                .custom-amount {
+                    width: 100%;
+                    padding: 12px;
+                    border: 2px solid #ddd;
+                    border-radius: 8px;
+                    margin: 10px 0;
+                    font-size: 16px;
+                    text-align: center;
+                }
+                .paypal-btn {
+                    background: #0070ba;
+                    color: white;
+                    border: none;
+                    padding: 15px 30px;
+                    border-radius: 8px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    width: 100%;
+                    margin: 15px 0;
+                    transition: all 0.3s;
+                }
+                .paypal-btn:hover {
+                    background: #005ea6;
+                    transform: translateY(-2px);
+                }
+                .close-btn {
+                    background: #f44336;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    margin-top: 15px;
+                }
+                .close-btn:hover {
+                    background: #da190b;
+                }
+                .note {
+                    font-size: 12px;
+                    color: #888;
+                    margin-top: 15px;
+                    font-style: italic;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="coffee-icon">☕🇲🇳</div>
+                <h2>Buy Me a Mongolian Coffee</h2>
+                <p class="subtitle">Support the development of open-source DevOps tools!</p>
+                
+                <div class="amount-buttons">
+                    <button class="amount-btn" onclick="selectAmount(3)">$3 ☕</button>
+                    <button class="amount-btn" onclick="selectAmount(5)">$5 ☕☕</button>
+                    <button class="amount-btn" onclick="selectAmount(10)">$10 🍰</button>
+                    <button class="amount-btn" onclick="selectAmount(25)">$25 🎁</button>
+                </div>
+                
+                <input type="number" class="custom-amount" id="customAmount" placeholder="Enter custom amount ($)" min="1" step="0.01">
+                
+                <form action="https://www.paypal.com/donate" method="post" target="_top" id="paypalForm">
+                    <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
+                    <input type="hidden" name="amount" id="donationAmount" value="5">
+                    <input type="hidden" name="currency_code" value="USD">
+                    <input type="hidden" name="return" value="about:blank">
+                    <input type="hidden" name="cancel_return" value="about:blank">
+                    
+                    <button type="submit" class="paypal-btn">
+                        💳 Donate via PayPal
+                    </button>
+                </form>
+                
+                <button class="close-btn" onclick="window.close()">Maybe Later</button>
+                
+                <p class="note">
+                    🙏 Your support helps maintain and improve this project.<br>
+                    Thank you for being awesome!
+                </p>
+            </div>
+            
+            <script>
+                let selectedAmount = 5;
+                
+                function selectAmount(amount) {
+                    selectedAmount = amount;
+                    document.getElementById('donationAmount').value = amount;
+                    document.getElementById('customAmount').value = '';
+                    
+                    // Update button styles
+                    document.querySelectorAll('.amount-btn').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    event.target.classList.add('selected');
+                }
+                
+                // Handle custom amount
+                document.getElementById('customAmount').addEventListener('input', function() {
+                    const customAmount = parseFloat(this.value);
+                    if (customAmount && customAmount > 0) {
+                        selectedAmount = customAmount;
+                        document.getElementById('donationAmount').value = customAmount;
+                        
+                        // Remove selection from preset buttons
+                        document.querySelectorAll('.amount-btn').forEach(btn => {
+                            btn.classList.remove('selected');
+                        });
+                    }
+                });
+                
+                // Handle form submission
+                document.getElementById('paypalForm').addEventListener('submit', function(e) {
+                    // Show thank you message after a brief delay
+                    setTimeout(function() {
+                        showThankYou();
+                    }, 2000);
+                });
+                
+                function showThankYou() {
+                    document.querySelector('.container').innerHTML = \`
+                        <div class="coffee-icon">🎉</div>
+                        <h2>Thank You So Much!</h2>
+                        <p>Your generosity means the world to me! 🙏</p>
+                        <p>This contribution will help:</p>
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>🔄 Keep the project updated</li>
+                            <li>📚 Create more DevOps tutorials</li>
+                            <li>🛠️ Add new features and improvements</li>
+                            <li>☕ Fuel late-night coding sessions</li>
+                        </ul>
+                        <p><strong>You're amazing! 🌟</strong></p>
+                        <button class="close-btn" onclick="window.close()" style="background: #4CAF50;">Close Window</button>
+                    \`;
+                }
+                
+                // Auto-select $5 by default
+                document.querySelector('.amount-btn[onclick="selectAmount(5)"]').classList.add('selected');
+            </script>
+        </body>
+        </html>
+    `;
+    
+    popup.document.write(paypalHTML);
+    popup.document.close();
+}
+</script>
 
 ---
 
