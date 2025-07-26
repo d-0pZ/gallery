@@ -517,7 +517,7 @@ pipeline {
          */
         stage('Run Tests') {
             steps {
-                // Execute test suite with output sanitization to prevent credentials leakage
+                // Execute test suite with output sanitization to prevent credential leakage
                 // sed command masks MongoDB connection strings in logs for security
                 sh '''
                     npm test 2>&1 | sed 's/mongodb:\\/\\/[^:]*:[^@]*@[^/]*/mongodb:\\/\\/***:***@***/g'
