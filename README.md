@@ -715,10 +715,9 @@ docker restart jenkins-server
 
 </details>
 
-### 🆘 Support Channels
+### 🆘 Support Channel
 
 - 📧 **Email**: iqra2.ali@proton.me
-- 📚 **Documentation**: [Internal Wiki](https://wiki.yourcompany.com)
 
 ## 🚀 Performance Optimizations
 
@@ -743,8 +742,6 @@ docker restart jenkins-server
 - [ ] **Advanced Monitoring**: Prometheus and Grafana integration
 - [ ] **Automated Rollbacks**: Failure detection and automatic rollback
 - [ ] **Performance Testing**: Automated load testing integration
-
----
 
 ---
 
