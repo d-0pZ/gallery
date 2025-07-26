@@ -31,7 +31,7 @@ This project demonstrates the implementation of a CI/CD pipeline using Jenkins f
 - 🔄 **Automated Testing** - Comprehensive test suite with Mocha integration
 - 🚀 **Multi-Environment Deployment** - Production, development, and test environments
 - 📊 **Real-time Monitoring** - Slack and email notifications
-- 🛡️ **Security Scanning** - Automated vulnerability assessment
+- 🛡️ **Security Scanning** - Automated vulnerability assessments
 - ⚡ **Performance Optimized** - minimized build time
 
 ## 🤔 Why Jenkins Over GitHub Actions?
