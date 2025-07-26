@@ -424,52 +424,124 @@ Default Recipients: [Team email addresses]
 <summary>Click to expand complete Jenkinsfile</summary>
 
 ```groovy
+/**
+ * Jenkins Pipeline Configuration for Gallery Application
+ * 
+ * This declarative pipeline automates the CI/CD process for a Node.js gallery application
+ * deployed on Render platform. The pipeline includes dependency management, security auditing,
+ * testing, deployment verification, and comprehensive notification system.
+ * 
+ * @author DevOps Team
+ * @version 1.0
+ * @since 2025
+ */
+
 pipeline {
+    // Use any available Jenkins agent for pipeline execution
     agent any
     
+    /**
+     * Tool Configuration
+     * Defines the specific tools and versions required for the build process
+     */
     tools {
+        // Specify Node.js version for consistent runtime environment
         nodejs 'NodeJS-24'
     }
     
+    /**
+     * Environment Variables Configuration
+     * Centralizes environment-specific configurations and sensitive credentials
+     * All MongoDB URIs are stored as Jenkins credentials for security
+     */
     environment {
+        // Production database connection string (secured via Jenkins credentials)
         MONGODB_URI_PRODUCTION = credentials('mongodb-uri-production')
+        
+        // Development database connection string (secured via Jenkins credentials)
         MONGODB_URI_DEVELOPMENT = credentials('mongodb-uri-development')
+        
+        // Test database connection string (secured via Jenkins credentials)
         MONGODB_URI_TEST = credentials('mongodb-uri-test')
+        
+        // Target deployment URL for health checks and notifications
         RENDER_APP_URL = 'https://gallery-pxfl.onrender.com'
     }
     
+    /**
+     * Pipeline Options Configuration
+     * Defines pipeline behavior, retention policies, and timeout constraints
+     */
     options {
+        // Retain only the last 10 builds to manage disk space efficiently
         buildDiscarder(logRotator(numToKeepStr: '10'))
+        
+        // Set maximum pipeline execution time to prevent hanging builds
         timeout(time: 20, unit: 'MINUTES')
     }
     
+    /**
+     * Pipeline Stages Definition
+     * Sequential execution of CI/CD pipeline phases
+     */
     stages {
+        /**
+         * SOURCE CODE MANAGEMENT STAGE
+         * Clones the source code repository from version control
+         */
         stage('Clone Repository') {
             steps {
+                // Clone the master branch from GitHub repository
+                // Using explicit branch specification for consistency
                 git branch: 'master', url: 'https://github.com/d-0pZ/gallery.git'
             }
         }
         
+        /**
+         * DEPENDENCY MANAGEMENT STAGE
+         * Installs project dependencies with optimized caching strategy
+         */
         stage('Install Dependencies') {
             steps {
+                // Use npm ci for faster, reliable, reproducible dependency installation
+                // --cache: Custom cache directory for better performance
+                // --silent: Reduces log verbosity for cleaner output
                 sh 'npm ci --cache ~/.npm-cache --silent'
             }
         }
         
+        /**
+         * SECURITY AUDIT STAGE
+         * Performs security vulnerability assessment of dependencies
+         */
         stage('Security Audit') {
             steps {
+                // Run npm security audit with moderate severity threshold
+                // || true: Prevents pipeline failure on audit findings (advisory only)
+                // Consider changing to 'high' or 'critical' for stricter security
                 sh 'npm audit --audit-level moderate || true'
             }
         }
         
+        /**
+         * TESTING STAGE
+         * Executes automated test suite with credential sanitization
+         */
         stage('Run Tests') {
             steps {
+                // Execute test suite with output sanitization to prevent credential leakage
+                // sed command masks MongoDB connection strings in logs for security
                 sh '''
                     npm test 2>&1 | sed 's/mongodb:\\/\\/[^:]*:[^@]*@[^/]*/mongodb:\\/\\/***:***@***/g'
                 '''
             }
+            /**
+             * Post-stage actions for test failures
+             * Implements immediate notification on test failures
+             */
             post {
                 failure {
+                    // Send email notification to development team on test failure
                     emailext (
                         subject: "Test Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                         body: "Tests failed in build ${env.BUILD_NUMBER}. Check console at ${env.BUILD_URL}",
@@ -479,56 +551,80 @@ pipeline {
             }
         }
         
+        /**
+         * DEPLOYMENT STAGE
+         * Handles deployment to Render platform with health verification
+         */
         stage('Deploy to Render') {
             steps {
+                // Render deployments are triggered automatically via GitHub webhooks
                 echo 'Deployment triggered automatically via GitHub push to Render'
                 echo "App URL: ${env.RENDER_APP_URL}"
                 echo 'Waiting for deployment to complete...'
                 
+                // Initial wait period to allow Render deployment process to start
                 sleep time: 30, unit: 'SECONDS'
                 
+                /**
+                 * Deployment Verification Logic
+                 * Implements retry mechanism with exponential backoff for deployment verification
+                 */
                 script {
-                    def maxRetries = 10
-                    def retryCount = 0
-                    def deploymentSuccess = false
+                    def maxRetries = 10              // Maximum number of health check attempts
+                    def retryCount = 0               // Current retry attempt counter
+                    def deploymentSuccess = false    // Deployment status flag
                     
+                    // Retry loop for deployment verification
                     while (retryCount < maxRetries && !deploymentSuccess) {
                         try {
+                            // Perform HTTP health check on deployed application
+                            // -f: Fail silently on HTTP errors
+                            // -s: Silent mode (no progress bar)
+                            // --max-time: Maximum time for the request
                             sh "curl -f -s --max-time 30 ${env.RENDER_APP_URL} > /dev/null"
                             deploymentSuccess = true
                             echo "✅ Deployment verified successfully!"
                         } catch (Exception e) {
                             retryCount++
                             echo "⏳ Deployment check ${retryCount}/${maxRetries} failed, retrying in 30s..."
+                            // Wait before next retry attempt
                             sleep time: 30, unit: 'SECONDS'
                         }
                     }
                     
+                    // Fail the pipeline if all verification attempts failed
                     if (!deploymentSuccess) {
                         error "❌ Deployment verification failed after ${maxRetries} attempts"
                     }
                 }
             }
+            /**
+             * Post-deployment notifications
+             * Sends status updates to Slack and email channels
+             */
             post {
                 success {
+                    // Send success notification to Slack channel
                     slackSend(
-                        channel: '#yourname_ip1',
-                        color: 'good',
+                        channel: '#yourname_ip1',           // Target Slack channel
+                        color: 'good',                      // Green color indicator
                         message: "🚀 Deployment Successful! Build #${env.BUILD_NUMBER} deployed to ${env.RENDER_APP_URL}",
-                        teamDomain: 'YourWorkspace',
-                        tokenCredentialId: 'slack-token',
-                        botUser: true
+                        teamDomain: 'YourWorkspace',        // Slack workspace domain
+                        tokenCredentialId: 'slack-token',   // Jenkins credential for Slack token
+                        botUser: true                       // Use bot user for posting
                     )
                 }
                 failure {
+                    // Send failure notification to Slack channel
                     slackSend(
                         channel: '#yourname_ip1',
-                        color: 'danger',
+                        color: 'danger',                    // Red color indicator
                         message: "❌ Deployment Failed! Build #${env.BUILD_NUMBER} - Check logs at ${env.BUILD_URL}",
                         teamDomain: 'YourWorkspace',
                         tokenCredentialId: 'slack-token',
                         botUser: true
                     )
+                    // Send failure notification via email
                     emailext (
                         subject: "Deployment Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                         body: "Deployment failed in build ${env.BUILD_NUMBER}. Check console at ${env.BUILD_URL} and Render logs.",
@@ -539,11 +635,17 @@ pipeline {
         }
     }
     
+    /**
+     * Pipeline Post-Actions
+     * Global post-pipeline execution actions regardless of stage outcomes
+     */
     post {
         success {
+            // Log successful pipeline completion
             echo 'Pipeline completed successfully!'
         }
         failure {
+            // Handle pipeline-level failures with comprehensive notification
             echo 'Pipeline failed!'
             emailext (
                 subject: "Pipeline Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
