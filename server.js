@@ -16,7 +16,7 @@ function sanitizeError(error) {
     if (typeof error === 'string') {
         // Replace any MongoDB URI patterns with masked version
         return error.replace(
-            /mongodb(+srv)?:\/\/[^:]+:[^@]+@[^/]+/g,
+            /mongodb(\+srv)?:\/\/[^:]+:[^@]+@[^/]+/g,
             'mongodb://***:***@***'
         );
     }
@@ -37,7 +37,7 @@ process.emitWarning = function(warning, type, code, ctor) {
 // Override console methods to sanitize MongoDB URIs
 const originalConsoleError = console.error;
 const originalConsoleLog = console.log;
-const originalConsoleWarm = console.warm;
+const originalConsoleWarn = console.warn;
 
 console.error = function(...args) {
     const sanitizedArgs = args.map(arg => sanitizeError(arg));
@@ -74,7 +74,7 @@ mongoose.connect(MONGODB_URI, {
 },(err)=>{
     if (err) {
         // Enhanced error handling
-        console.log(sanitizeError.message || err)
+        console.log(sanitizeError(err.message || err))
     }else{
         console.log(getSecureLogMessage(MONGODB_URI))
     }
