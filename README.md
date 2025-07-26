@@ -1,4 +1,4 @@
-# Enterprise CI/CD Pipeline Implementation with Jenkins
+#DevOps: CI/CD Pipeline Implementation with Jenkins
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://jenkins.io/)
 [![Jenkins](https://img.shields.io/badge/Jenkins-2.4+-blue.svg)](https://jenkins.io/)
@@ -21,9 +21,6 @@
 - [Monitoring & Alerts](#-monitoring--alerts)
 - [Troubleshooting](#-troubleshooting)
 - [Performance Metrics](#-performance-metrics)
-- [Contributing](#-contributing)
-- [Resources](#-resources)
-- [License](#-license)
 
 ## 🎯 Project Overview
 
@@ -281,7 +278,7 @@ module.exports = config;
 
 **server.js enhancements**:
 ```javascript
-// ========== CREDENTIAL SECURITY IMPLEMENTATION ==========
+// CREDENTIAL SECURITY IMPLEMENTATION 
 // Helper function to mask sensitive data in error messages
 function sanitizeError(error) {
     if (typeof error === 'string') {
@@ -324,7 +321,6 @@ console.warn = function(...args) {
     const sanitizedArgs = args.map(arg => sanitizeError(arg));
     originalConsoleWarn.apply(console, sanitizedArgs);
 };
-// ========== END CREDENTIAL SECURITY IMPLEMENTATION ==========
 ```
 </details>
 
@@ -356,7 +352,6 @@ Secret: [Slack Bot Token]
 Description: Slack Bot OAuth Token for CI/CD notifications
 ```
 
-> 📖 **Reference**: [Jenkins Credentials Plugin](https://plugins.jenkins.io/credentials/)
 
 ### 6. 🔗 Webhook Configuration
 
@@ -372,8 +367,6 @@ ngrok http 8080
 # Note the generated URL: https://xxxx-xx-xx-xxx-xx.ngrok.io
 ```
 
-> 📖 **Reference**: [ngrok Documentation](https://ngrok.com/docs)
-
 #### 6.2 GitHub Webhook Configuration
 
 **Repository Settings** → **Webhooks** → **Add webhook**:
@@ -386,14 +379,14 @@ Events: Just the push event
 Active: ✓
 ```
 
-> 📖 **Reference**: [GitHub Webhooks Guide](https://docs.github.com/en/developers/webhooks-and-events/webhooks)
+> 📖 **Reference**: [GitHub Webhooks Guide](https://docs.github.com/en/webhooks)
 
 ### 7. 💬 Communication Setup
 
 #### 7.1 Slack Integration Configuration
 
 1. **Create Slack App**:
-   - Visit [Slack API](https://api.slack.com/apps)
+   - Visit [Slack API](https://plugins.jenkins.io/slack/)
    - Create new app from scratch
    - Choose workspace
 
@@ -411,8 +404,6 @@ Active: ✓
    Invite: Technical team members
    ```
 
-> 📖 **Reference**: [Slack Bot Setup Guide](https://api.slack.com/bot-users)
-
 #### 7.2 Email Notification Setup
 
 **Manage Jenkins** → **Configure System** → **Extended E-mail Notification**:
@@ -425,8 +416,6 @@ SMTP Password: [App Password]
 Use SSL: ✓
 Default Recipients: [Team email addresses]
 ```
-
-> 📖 **Reference**: [Gmail SMTP Configuration](https://support.google.com/mail/answer/7126229)
 
 ### 8. 🔄 Pipeline Implementation
 
@@ -464,9 +453,7 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                // ========== CREDENTIAL SECURITY FIX - Added --silent flag ==========
                 sh 'npm ci --cache ~/.npm-cache --silent'
-                // ========== END CREDENTIAL SECURITY FIX ==========
             }
         }
         
@@ -478,11 +465,9 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                // ========== CREDENTIAL SECURITY FIX - Filter MongoDB URIs from output ==========
                 sh '''
                     npm test 2>&1 | sed 's/mongodb:\\/\\/[^:]*:[^@]*@[^/]*/mongodb:\\/\\/***:***@***/g'
                 '''
-                // ========== END CREDENTIAL SECURITY FIX ==========
             }
             post {
                 failure {
@@ -501,10 +486,8 @@ pipeline {
                 echo "App URL: ${env.RENDER_APP_URL}"
                 echo 'Waiting for deployment to complete...'
                 
-                // Wait for deployment to process
                 sleep time: 30, unit: 'SECONDS'
                 
-                // Verify deployment success
                 script {
                     def maxRetries = 10
                     def retryCount = 0
@@ -694,15 +677,6 @@ pipeline {
 | 🚫 Failed Deploy | ✅ | ✅ | High | Immediate Response |
 | 🛡️ Security Issues | ✅ | ✅ | Critical | Critical Response |
 
-### 📈 Performance Metrics
-
-| Metric | Target | Current | Status |
-|--------|---------|---------|---------|
-| **Build Time** | < 5 min | ~3-5 min | ✅ |
-| **Test Execution** | < 5 sec | ~2-3 sec | ✅ |
-| **Deployment Time** | < 2 min | ~30-60 sec | ✅ |
-| **Success Rate** | > 95% | 99.5% | 🎯 |
-
 ## 🔧 Troubleshooting
 
 ### Common Issues and Solutions
@@ -744,10 +718,8 @@ docker restart jenkins-server
 
 ### 🆘 Support Channels
 
-- 📧 **Email**: devops@yourcompany.com
-- 💬 **Slack**: #devops-support
+- 📧 **Email**: iqra2.ali@proton.me
 - 📚 **Documentation**: [Internal Wiki](https://wiki.yourcompany.com)
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/your-username/gallery/issues)
 
 ## 🚀 Performance Optimizations
 
@@ -773,57 +745,11 @@ docker restart jenkins-server
 - [ ] **Automated Rollbacks**: Failure detection and automatic rollback
 - [ ] **Performance Testing**: Automated load testing integration
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### 📋 Development Workflow
-
-1. 🍴 Fork the repository
-2. 🌱 Create feature branch (`git checkout -b feature/amazing-feature`)
-3. ✅ Commit changes (`git commit -m 'Add amazing feature'`)
-4. 📤 Push to branch (`git push origin feature/amazing-feature`)
-5. 🔀 Open Pull Request
-
-### 📝 Code of Conduct
-
-Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
-
-## 📚 Resources
-
-### 📖 Official Documentation
-- [Jenkins Documentation](https://www.jenkins.io/doc/)
-- [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
-- [Render Documentation](https://render.com/docs)
-- [GitHub Webhooks](https://docs.github.com/en/developers/webhooks-and-events/webhooks)
-- [Slack API Documentation](https://api.slack.com/)
-
-### 🛠️ Tools & Plugins
-- [Jenkins Plugins Index](https://plugins.jenkins.io/)
-- [Docker Hub - Jenkins](https://hub.docker.com/r/jenkins/jenkins)
-- [ngrok Documentation](https://ngrok.com/docs)
-- [Mocha Testing Framework](https://mochajs.org/)
-
-### 📚 Tutorials & Guides
-- [Jenkins Pipeline Tutorial](https://www.jenkins.io/doc/book/pipeline/)
-- [MongoDB Atlas Getting Started](https://docs.atlas.mongodb.com/getting-started/)
-- [Slack Bot Development](https://api.slack.com/bot-users)
-- [GitHub Actions vs Jenkins](https://www.jenkins.io/blog/2019/12/02/matrix-building-with-scripted-pipeline/)
-
-### 🎓 Learning Resources
-- [Jenkins Certification](https://www.jenkins.io/projects/jenkins-certification/)
-- [MongoDB University](https://university.mongodb.com/)
-- [DevOps Learning Path](https://roadmap.sh/devops)
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
 ---
 
 <div align="center">
 
-**Built with ❤️ by the DevOps Team**
+**Built with ❤️ by Iqra Ali**
 
 [![Follow on GitHub](https://img.shields.io/github/followers/your-username?style=social)](https://github.com/your-username)
 [![Star this repo](https://img.shields.io/github/stars/your-username/gallery?style=social)](https://github.com/your-username/gallery)
