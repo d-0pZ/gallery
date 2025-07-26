@@ -1,3 +1,5 @@
+![Alt text](./jenkins-IP1.png)
+
 ## DevOps: CI/CD Pipeline Implementation with Jenkins
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://jenkins.io/)
